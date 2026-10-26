@@ -24,7 +24,7 @@ pub struct Args {
     #[arg(short, long)]
     pub job: Option<PathBuf>,
 
-    /// Write JSON report to FILE ("-" or no value = stdout; implies --quiet)
+    /// Write JSON report to FILE ("-" or no value = stdout, which implies --quiet)
     #[arg(long, value_name = "FILE", num_args = 0..=1, default_missing_value = "-")]
     pub json: Option<PathBuf>,
 

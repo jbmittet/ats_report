@@ -6,7 +6,7 @@ A Rust command-line tool that inspects a PDF and shows what an Applicant Trackin
 
 - **Primary extraction with PDFium** (the engine behind Chromium's PDF viewer), with a `lopdf` and `pdf-extract` fallback
 - **Per-page extraction** with word, line, and short-line statistics
-- **Scoring out of 100** across five categories:
+- **Scoring out of 100** across six categories:
   - Text extractability (30)
   - Layout and reading order (20)
   - Contact info (15)
@@ -14,6 +14,8 @@ A Rust command-line tool that inspects a PDF and shows what an Applicant Trackin
   - Dates (10)
   - Content and length (10)
 - **Contact parsing**: name, email, phone, LinkedIn, GitHub, and URLs
+- **Skill detection** from a built-in taxonomy, grouped by category, with frontend-specific gap advice
+- **Job description comparison** (`--job`): skill overlap, missing skills, and frequent missing keywords
 - **Findings** that flag suspicious layouts, odd glyphs (icon fonts or custom bullets), and missing sections
 - **JSON export** of the full analysis
 
@@ -30,7 +32,7 @@ PDFium binaries are fetched from [bblanchon/pdfium-binaries](https://github.com/
 
 | OS      | Architectures       |
 |---------|---------------------|
-| Linux   | x64, arm64          |
+| Linux   | x64, arm64, arm (32-bit) |
 | macOS   | x64, arm64          |
 | Windows | x64, arm64          |
 
@@ -67,9 +69,12 @@ cargo run -- resume.pdf --text-only > resume.txt
 cargo run -- resume.pdf --quiet --fail-under 70
 ```
 
-`--json` and `--text-only` imply `--quiet`, so machine-readable output on stdout
-is never mixed with the colored report. `--raw` and `--previews` add sections to
-the human report, so they conflict with `--quiet`.
+`--json` with no value (or `-`) and `--text-only` imply `--quiet`, so
+machine-readable output on stdout is never mixed with the colored report.
+`--json FILE` still prints the human report (and a confirmation line) unless you
+also pass `--quiet`. `--raw` and `--previews` add sections to the human report,
+so they conflict with `--quiet`; they also cannot be combined with `--json -`,
+and `--text-only` cannot be combined with `--raw`, `--previews`, or `--json -`.
 
 Run `cargo run -- --help` for the complete list of options.
 
@@ -105,4 +110,4 @@ Finally generate samples with `python3 make_samples.py`, three files (low_score.
 
 ## License
 
-Add your license here.
+This project is licensed under the MIT License — see [LICENSE](LICENSE).
