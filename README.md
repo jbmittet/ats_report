@@ -1,4 +1,4 @@
-# ats-inspector
+# ATS-report
 
 A Rust command-line tool that inspects a PDF and shows what an Applicant Tracking System (ATS) is likely to "see": extracted text, reading order, contact fields, section headers, dates, and an overall score with findings.
 
